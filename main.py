@@ -25,8 +25,8 @@ class Inhabitant:
 class Player(Inhabitant):
     def __init__(self, max_hp, max_str, max_defence):
         super().__init__("Warrior")
-        self.xcoord = 1
-        self.ycoord = 400
+        self.xcoord = 10
+        self.ycoord = 40
         self.hp = random.randint(10, max_hp)
         self.str = random.randint(10, max_str)
         self.defence = random.randint(10, max_defence)       
