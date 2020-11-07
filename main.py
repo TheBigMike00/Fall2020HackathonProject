@@ -2,7 +2,6 @@ import random
 import pygame
 from pygame.locals import *
 import sys
-import time
 pygame.init()
 
 #2D Array Key:
@@ -29,7 +28,8 @@ def drawRectInArr(color, arrX, arrY):
     #(starting x point, starting y point, "move over x steps"", 'move /up y steps )
     pygame.draw.rect(screen, color, (startX, startY, BLOCK_WIDTH, BLOCK_HEIGHT))
 
-FPS = 200
+
+FPS = 15
 FramePerSec = pygame.time.Clock()
 background_colour = (0,0,255) #RGB Value
 (width, height) = (800, 400) 
@@ -66,9 +66,7 @@ arr = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5], 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1], 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
-arr[7][9] = 5
-arr[0][0] = 5
-arr[1][0] = 5
+
 def displayGameboard():
     for r in range(20):
         for c in range (40):
@@ -98,8 +96,7 @@ class Player(Inhabitant):
         self.ycoord = 9
         self.displayPlayer()
         arr[self.ycoord][self.xcoord] = 3
-        isInAir = True
-        isAlive = True
+        self.isAlive = True
 
     def update(self, key_pressed):
         if (key_pressed == K_LEFT):
@@ -135,19 +132,42 @@ class Player(Inhabitant):
     
     def jump(self):
         currentLocation = arr[self.ycoord][self.xcoord]
-        attemptingLocation = arr[self.ycoord - 1][self.xcoord]
+        attemptingLocation = arr[self.ycoord + 3][self.xcoord]
         if(attemptingLocation == 0):
             currentLocation = 0
             drawRectInArr(WHITE,self.xcoord, self.ycoord)
             attemptingLocation = 3
-            self.ycoord = self.ycoord - 1
+            self.ycoord = self.ycoord - 3
             self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
     
-    def gravity(self):
-      return None
- 
+    def fallIfNeeded(self):
+        currentLocation = arr[self.ycoord][self.xcoord]
+        attemptingLocation = arr[self.ycoord + 1][self.xcoord]
+        if(attemptingLocation == 0):
+            currentLocation = 0
+            drawRectInArr(WHITE,self.xcoord, self.ycoord)
+            '''
+            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 5, BLOCK_WIDTH, BLOCK_HEIGHT))
+            FramePerSec.tick(FPS)
+            pygame.draw.rect(screen, WHITE, (self.xcoord * 20, (self.ycoord * 20) + 5, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 10, BLOCK_WIDTH, BLOCK_HEIGHT))
+            FramePerSec.tick(FPS)
+            pygame.draw.rect(screen, WHITE, (self.xcoord * 20, (self.ycoord * 20) + 10, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 15, BLOCK_WIDTH, BLOCK_HEIGHT))
+            FramePerSec.tick(FPS)
+            pygame.draw.rect(screen, WHITE, (self.xcoord * 20, (self.ycoord * 20) + 15, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 20, BLOCK_WIDTH, BLOCK_HEIGHT))
+            FramePerSec.tick(FPS)
+            '''
+            attemptingLocation = 3
+            self.ycoord = self.ycoord + 1
+            self.displayPlayer()
+        elif(attemptingLocation == 2):
+            self.playerDeath()
+        print(self.xcoord, self.ycoord)
+        
     
     def displayPlayer(self):
         drawRectInArr(GREEN, self.xcoord, self.ycoord)
@@ -173,24 +193,15 @@ def main():
                     running = False
                 elif event.key == K_LEFT:
                     player.update(event.key)
-                elif event.key == K_UP:
-                    player.update(event.key)
                 elif event.key == K_RIGHT:
+                    player.update(event.key)
+                elif event.key == K_UP:
                     player.update(event.key)
             elif event.type == QUIT:
                 running = False
             else:
                 pass
-            '''
-            if event.type == pygame.QUIT:
-                running = False
-                pygame.quit()
-                sys.exit()
-            if event.type == keys[pygame.K_LEFT]:
-                player.moveLeft()
-            if event.type == keys[pygame.K_RIGHT]:
-                player.moveRight()
-            '''
+        player.fallIfNeeded()
         pygame.display.update()
         FramePerSec.tick(FPS)
 
