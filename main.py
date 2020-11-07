@@ -18,6 +18,7 @@ WHITE = (255,255,255)
 RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0,0,255)
+BLACK = (0,0,0)
 
 
 def drawRectInArr(color, arrX, arrY):
@@ -64,7 +65,13 @@ arr = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1], 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 
+def displayGameboard():
+    for r in range(20):
+        for c in range (40):
+            if(arr[r][c] == 1):
+                drawRectInArr(BLACK, r,c)
 
+displayGameboard()
 
       
 class Inhabitant:
@@ -80,7 +87,7 @@ class Player(Inhabitant):
         self.xcoord = 0
         self.ycoord = rows-1
         self.displayPlayer()
-        arr[0][rows-1] = 3
+        arr[self.xcoord][self.ycoord] = 3
         isInAir = True
         isAlive = True
 
@@ -157,6 +164,8 @@ def main():
                     player.update(event.key)
             elif event.type == QUIT:
                 running = False
+            else:
+                pass
             '''
             if event.type == pygame.QUIT:
                 running = False
