@@ -1,3 +1,4 @@
+import random
 import pygame
 pygame.init()
 
@@ -21,7 +22,17 @@ class Inhabitant:
     def display(self):
         print(f"{self.name} {self.xcoord} {self.ycoord}")
         
+class Player(Inhabitant):
+    def __init__(self, max_hp, max_str, max_defence):
+        super().__init__("Warrior")
+        self.hp = random.randint(10, max_hp)
+        self.str = random.randint(10, max_str)
+        self.defence = random.randint(10, max_defence)
+        
+    def display(self):
+        print(f"{self.name} has {self.hp} HP, {self.str} Strength, and {self.defence} Defence.")        
+        
 def main():
     
 if __name__=="__main__":
-    main()
+  main()
