@@ -2,6 +2,7 @@ import random
 import pygame
 from pygame.locals import *
 import sys
+import time
 pygame.init()
 
 #2D Array Key:
@@ -134,7 +135,7 @@ class Player(Inhabitant):
     
     def jump(self):
         currentLocation = arr[self.ycoord][self.xcoord]
-        attemptingLocation = arr[self.ycoord + 1][self.xcoord]
+        attemptingLocation = arr[self.ycoord - 1][self.xcoord]
         if(attemptingLocation == 0):
             currentLocation = 0
             drawRectInArr(WHITE,self.xcoord, self.ycoord)
@@ -143,6 +144,9 @@ class Player(Inhabitant):
             self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
+    
+    def gravity(self):
+      return None
  
     
     def displayPlayer(self):
@@ -168,6 +172,8 @@ def main():
                 if event.key == K_ESCAPE:
                     running = False
                 elif event.key == K_LEFT:
+                    player.update(event.key)
+                elif event.key == K_UP:
                     player.update(event.key)
                 elif event.key == K_RIGHT:
                     player.update(event.key)
