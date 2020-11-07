@@ -43,21 +43,26 @@ while running:
 class Inhabitant:
     def __init__(self, name):
         self.name = name
-        self.hp = -1
-        self.str = -1
-        self.defence = -1
         self.xcoord = None
         self.ycoord = None
         
 class Player(Inhabitant):
     def __init__(self, max_hp, max_str, max_defence):
         super().__init__("Warrior")
-        self.xcoord = 1
-        self.ycoord = 4
+        self.xcoord = 0
+        self.ycoord = 0
         self.hp = random.randint(10, max_hp)
         self.str = random.randint(10, max_str)
-        self.defence = random.randint(10, max_defence)       
+        self.defence = random.randint(10, max_defence)
+
         
+class Poison_Shroom(Inhabitant):
+    def __init__(self, max_hp):
+        super().__init__("Poison Shroom")
+        self.xcoord = 0
+        self.ycoord = 0
+        self.hp = random.randint(10, max_hp)
+                
 def main():
   print("hello world")
     
