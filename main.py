@@ -89,6 +89,8 @@ class Player(Inhabitant):
             self.moveLeft()
         if (key_pressed == K_RIGHT):
             self.moveRight()
+        if (key_pressed == K_UP):
+            self.jump()
 
     def moveRight(self):
         currentLocation = arr[self.xcoord][self.ycoord]
@@ -113,15 +115,19 @@ class Player(Inhabitant):
             self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
-    '''
+    
     def jump(self):
         currentLocation = arr[self.xcoord][self.ycoord]
         attemptingLocation = arr[self.xcoord][self.ycoord - 3]
         if(attemptingLocation == 0):
-            self.xcoord = attemptingLocation
+            currentLocation = 0
+            drawRectInArr(BLUE,self.xcoord, self.ycoord)
+            attemptingLocation = 3
+            self.ycoord = self.ycoord -3
+            self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
-        '''
+ 
     
     def displayPlayer(self):
         drawRectInArr(GREEN, self.xcoord, self.ycoord)
