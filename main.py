@@ -33,6 +33,7 @@ class Player(Inhabitant):
         print(f"{self.name} has {self.hp} HP, {self.str} Strength, and {self.defence} Defence.")        
         
 def main():
+  print("hello world")
     
 if __name__ == "__main__":
   main()
