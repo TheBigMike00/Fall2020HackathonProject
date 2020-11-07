@@ -39,7 +39,7 @@ screen.fill(background_colour)
 #pygame.draw.rect(screen, (255,0,0), (0,0, 40,80))
 screen.blit(screen,(0,0))
 pygame.display.flip()
-rows, cols = ((int)(height/20), (int)(width/20)) 
+rows,cols = ((int)(height/20), (int)(width/20)) 
 #arr = [[0 for i in range(cols)] for j in range(rows)]
 #print(arr) 
 
@@ -68,8 +68,12 @@ arr = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 def displayGameboard():
     for r in range(20):
         for c in range (40):
-            if(arr[r][c] == 1):
-                drawRectInArr(BLACK, r,c)
+            if(arr[r][c] == 0):
+                drawRectInArr(WHITE, c,r)
+            elif(arr[r][c] == 1):
+                drawRectInArr(BLACK, c,r)
+            elif(arr[r][c] == 4):
+                drawRectInArr(RED, c,r)
 
 displayGameboard()
 
@@ -84,8 +88,8 @@ class Player(Inhabitant):
 
     def __init__(self):
         super().__init__("Player")
-        self.xcoord = 0
-        self.ycoord = rows-1
+        self.xcoord = 2
+        self.ycoord = 9
         self.displayPlayer()
         arr[self.xcoord][self.ycoord] = 3
         isInAir = True
