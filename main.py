@@ -85,7 +85,7 @@ class Player(Inhabitant):
         
 
     def playerDeath(self):
-
+        pass
         
 class Poison_Shroom(Inhabitant):
     def __init__(self, max_hp):
