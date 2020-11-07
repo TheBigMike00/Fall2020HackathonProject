@@ -10,6 +10,8 @@ pygame.init()
 #2 -> enemy (kills player) (red)
 #3 -> player (green)
 #4 -> lava/spikes
+#5 -> exit/win
+#6 -> grass
 #Example: arr[2][3] = 3 (player location at x = 2 & y = 3)
 
 BLOCK_WIDTH = 20
@@ -81,7 +83,6 @@ def displayGameboard():
 
 displayGameboard()
 
-      
 class Inhabitant:
     def __init__(self, name):
         self.name = name
@@ -132,7 +133,7 @@ class Player(Inhabitant):
     
     def jump(self):
         currentLocation = arr[self.ycoord][self.xcoord]
-        attemptingLocation = arr[self.ycoord + 3][self.xcoord]
+        attemptingLocation = arr[self.ycoord - 3][self.xcoord]
         if(attemptingLocation == 0):
             currentLocation = 0
             drawRectInArr(WHITE,self.xcoord, self.ycoord)
