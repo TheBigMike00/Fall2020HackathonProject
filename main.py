@@ -29,17 +29,10 @@ print(arr)
 '''
 running = True
 while running:
-<<<<<<< HEAD
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-=======
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       running = False
       
->>>>>>> 96ea9b370520c28c7a99faaa95f30aa41ba98156
 class Inhabitant:
     def __init__(self, name):
         self.name = name
