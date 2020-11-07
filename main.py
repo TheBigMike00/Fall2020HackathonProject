@@ -20,3 +20,8 @@ class Inhabitant:
     
     def display(self):
         print(f"{self.name} {self.xcoord} {self.ycoord}")
+        
+def main():
+    
+if __name__=="__main__":
+    main()
