@@ -109,8 +109,8 @@ class Player(Inhabitant):
             self.jump()
 
     def moveRight(self):
-        currentLocation = arr[self.xcoord][self.ycoord]
-        attemptingLocation = arr[self.xcoord + 1][self.ycoord]
+        currentLocation = arr[self.ycoord][self.xcoord]
+        attemptingLocation = arr[self.ycoord][self.xcoord + 1]
         if(attemptingLocation == 0):
             currentLocation = 0
             drawRectInArr(WHITE,self.xcoord, self.ycoord)
@@ -119,16 +119,10 @@ class Player(Inhabitant):
             self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
-        print(arr[1][9])
-        print(arr[2][9])
-        print(arr[3][9])
-        print(arr[4][9])
-        print(arr[5][9])
-        print(arr[6][9])
     
     def moveLeft(self):
-        currentLocation = arr[self.xcoord][self.ycoord]
-        attemptingLocation = arr[self.xcoord - 1][self.ycoord]
+        currentLocation = arr[self.ycoord][self.xcoord]
+        attemptingLocation = arr[self.ycoord][self.xcoord + 1]
         if(attemptingLocation == 0):
             currentLocation = 0
             drawRectInArr(WHITE,self.xcoord, self.ycoord)
@@ -139,8 +133,8 @@ class Player(Inhabitant):
             self.playerDeath()
     
     def jump(self):
-        currentLocation = arr[self.xcoord][self.ycoord]
-        attemptingLocation = arr[self.xcoord][self.ycoord - 1]
+        currentLocation = arr[self.ycoord][self.xcoord]
+        attemptingLocation = arr[self.ycoord + 1][self.xcoord]
         if(attemptingLocation == 0):
             currentLocation = 0
             drawRectInArr(WHITE,self.xcoord, self.ycoord)
