@@ -19,6 +19,7 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0,0,255)
 BLACK = (0,0,0)
+WINNINGCOLOR = (6,80,150)
 
 
 def drawRectInArr(color, arrX, arrY):
@@ -39,7 +40,7 @@ screen.fill(background_colour)
 #pygame.draw.rect(screen, (255,0,0), (0,0, 40,80))
 screen.blit(screen,(0,0))
 pygame.display.flip()
-rows,cols = ((int)(height/20), (int)(width/20)) 
+rows, cols = ((int)(height/20), (int)(width/20)) 
 #arr = [[0 for i in range(cols)] for j in range(rows)]
 #print(arr) 
 
@@ -59,12 +60,14 @@ arr = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1], 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1], 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1], 
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1], 
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 5], 
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5], 
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5], 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1], 
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
-
+arr[7][9] = 5
+arr[0][0] = 5
+arr[1][0] = 5
 def displayGameboard():
     for r in range(20):
         for c in range (40):
@@ -74,6 +77,8 @@ def displayGameboard():
                 drawRectInArr(BLACK, c,r)
             elif(arr[r][c] == 4):
                 drawRectInArr(RED, c,r)
+            elif(arr[r][c] == 5):
+                drawRectInArr(WINNINGCOLOR, c,r)
 
 displayGameboard()
 
@@ -91,7 +96,7 @@ class Player(Inhabitant):
         self.xcoord = 2
         self.ycoord = 9
         self.displayPlayer()
-        arr[self.xcoord][self.ycoord] = 3
+        arr[self.ycoord][self.xcoord] = 3
         isInAir = True
         isAlive = True
 
@@ -108,19 +113,25 @@ class Player(Inhabitant):
         attemptingLocation = arr[self.xcoord + 1][self.ycoord]
         if(attemptingLocation == 0):
             currentLocation = 0
-            drawRectInArr(BLUE,self.xcoord, self.ycoord)
+            drawRectInArr(WHITE,self.xcoord, self.ycoord)
             attemptingLocation = 3
             self.xcoord = self.xcoord + 1
             self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
+        print(arr[1][9])
+        print(arr[2][9])
+        print(arr[3][9])
+        print(arr[4][9])
+        print(arr[5][9])
+        print(arr[6][9])
     
     def moveLeft(self):
         currentLocation = arr[self.xcoord][self.ycoord]
         attemptingLocation = arr[self.xcoord - 1][self.ycoord]
         if(attemptingLocation == 0):
             currentLocation = 0
-            drawRectInArr(BLUE,self.xcoord, self.ycoord)
+            drawRectInArr(WHITE,self.xcoord, self.ycoord)
             attemptingLocation = 3
             self.xcoord = self.xcoord - 1
             self.displayPlayer()
@@ -129,12 +140,12 @@ class Player(Inhabitant):
     
     def jump(self):
         currentLocation = arr[self.xcoord][self.ycoord]
-        attemptingLocation = arr[self.xcoord][self.ycoord - 3]
+        attemptingLocation = arr[self.xcoord][self.ycoord - 1]
         if(attemptingLocation == 0):
             currentLocation = 0
-            drawRectInArr(BLUE,self.xcoord, self.ycoord)
+            drawRectInArr(WHITE,self.xcoord, self.ycoord)
             attemptingLocation = 3
-            self.ycoord = self.ycoord -3
+            self.ycoord = self.ycoord - 1
             self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
