@@ -1,3 +1,4 @@
+import random
 import pygame
 pygame.init()
 
@@ -28,15 +29,37 @@ print(arr)
 '''
 running = True
 while running:
+<<<<<<< HEAD
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+=======
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      running = False
+      
+>>>>>>> 96ea9b370520c28c7a99faaa95f30aa41ba98156
 class Inhabitant:
     def __init__(self, name):
         self.name = name
+        self.hp = -1
+        self.str = -1
+        self.defence = -1
         self.xcoord = None
         self.ycoord = None
+        
+class Player(Inhabitant):
+    def __init__(self, max_hp, max_str, max_defence):
+        super().__init__("Warrior")
+        self.xcoord = 10
+        self.ycoord = 40
+        self.hp = random.randint(10, max_hp)
+        self.str = random.randint(10, max_str)
+        self.defence = random.randint(10, max_defence)       
+        
+def main():
+  print("hello world")
     
-    def display(self):
-        print(f"{self.name} {self.xcoord} {self.ycoord}")
+if __name__ == "__main__":
+  main()
