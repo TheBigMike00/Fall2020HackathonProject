@@ -9,6 +9,7 @@ pygame.init()
 #1 -> obstacle (area that player cannot move) (blue)
 #2 -> enemy (kills player) (red)
 #3 -> player (green)
+#4 -> lava/spikes
 #Example: arr[2][3] = 3 (player location at x = 2 & y = 3)
 
 BLOCK_WIDTH = 20
