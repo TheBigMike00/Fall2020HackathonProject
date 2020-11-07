@@ -45,7 +45,6 @@ class Inhabitant:
         self.ycoord = None
         
 class Player(Inhabitant):
-<<<<<<< Updated upstream
     def __init__(self, max_hp, max_str, max_defence):
         super().__init__("Warrior")
         self.xcoord = 0
@@ -53,7 +52,6 @@ class Player(Inhabitant):
         self.hp = random.randint(10, max_hp)
         self.str = random.randint(10, max_str)
         self.defence = random.randint(10, max_defence)
-=======
     def __init__(self):
         super().__init__("Player")
         self.xcoord = 0
@@ -87,7 +85,6 @@ class Player(Inhabitant):
         
 
     def playerDeath(self):
->>>>>>> Stashed changes
 
         
 class Poison_Shroom(Inhabitant):
