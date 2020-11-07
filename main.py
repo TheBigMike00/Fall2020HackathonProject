@@ -26,17 +26,11 @@ drawRectInArr(5,5)
 #pygame.draw.rect(screen, (255,0,0), (0,0, 40,80))
 screen.blit(screen,(0,0))
 pygame.display.flip()
-
 rows, cols = ((int)(height/20), (int)(width/20)) 
 arr = [[0 for i in range(cols)] for j in range(rows)] 
 arr[0][0] = 1
-print(arr)
+#print(arr)
 
-running = True
-while running:
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      running = False
       
 class Inhabitant:
     def __init__(self, name):
@@ -45,13 +39,7 @@ class Inhabitant:
         self.ycoord = None
         
 class Player(Inhabitant):
-    def __init__(self, max_hp, max_str, max_defence):
-        super().__init__("Warrior")
-        self.xcoord = 0
-        self.ycoord = 0
-        self.hp = random.randint(10, max_hp)
-        self.str = random.randint(10, max_str)
-        self.defence = random.randint(10, max_defence)
+
     def __init__(self):
         super().__init__("Player")
         self.xcoord = 0
@@ -64,6 +52,8 @@ class Player(Inhabitant):
         attemptingLocation = arr[self.xcoord + 1][self.ycoord]
         if(attemptingLocation == 0):
             self.xcoord = attemptingLocation
+            self.displayPlayer()
+
         elif(attemptingLocation == 2):
             self.playerDeath()
     
@@ -74,7 +64,7 @@ class Player(Inhabitant):
             self.xcoord = attemptingLocation
         elif(attemptingLocation == 2):
             self.playerDeath()
-        
+    '''
     def jump(self):
         currentLocation = arr[self.xcoord][self.ycoord]
         attemptingLocation = arr[self.xcoord][self.ycoord - 3]
@@ -82,7 +72,10 @@ class Player(Inhabitant):
             self.xcoord = attemptingLocation
         elif(attemptingLocation == 2):
             self.playerDeath()
-        
+        '''
+    
+    def displayPlayerOnBlock(self):
+        drawRectInArr(self.xcoord, self.ycoord, BLOCK_WIDTH, BLOCK_HEIGHT)
 
     def playerDeath(self):
         pass
@@ -95,7 +88,21 @@ class Poison_Shroom(Inhabitant):
         self.hp = random.randint(10, max_hp)
                 
 def main():
-  print("hello world")
+    running = True
+    keys=pygame.key.get_pressed()
+    player = Player()
+
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            
+            if event.key == pygame.K_LEFT:
+                player.moveLeft()
+            if event.key == pygame.K_RIGHT:
+                player.moveRight()
+
     
 if __name__ == "__main__":
   main()
