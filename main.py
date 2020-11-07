@@ -1,5 +1,6 @@
 import random
 import pygame
+from pygame.locals import *
 import sys
 pygame.init()
 
@@ -24,6 +25,8 @@ def drawRectInArr(color, arrX, arrY):
     #(starting x point, starting y point, "move over x steps"", 'move /up y steps )
     pygame.draw.rect(screen, color, (startX, startY, BLOCK_WIDTH, BLOCK_HEIGHT))
 
+FPS = 200
+FramePerSec = pygame.time.Clock()
 background_colour = (0,0,255) #RGB Value
 (width, height) = (800, 400) 
 screen = pygame.display.set_mode((width, height))
@@ -36,8 +39,7 @@ screen.blit(screen,(0,0))
 pygame.display.flip()
 rows, cols = ((int)(height/20), (int)(width/20)) 
 arr = [[0 for i in range(cols)] for j in range(rows)] 
-arr[0][0] = 1
-#print(arr)
+
 
       
 class Inhabitant:
@@ -51,15 +53,26 @@ class Player(Inhabitant):
     def __init__(self):
         super().__init__("Player")
         self.xcoord = 0
-        self.ycoord = rows
+        self.ycoord = rows-1
+        self.displayPlayer()
+        arr[0][rows-1] = 3
         isInAir = True
         isAlive = True
+
+    def update(self, key_pressed):
+        if (key_pressed == K_LEFT):
+            self.moveLeft()
+        if (key_pressed == K_RIGHT):
+            self.moveRight()
 
     def moveRight(self):
         currentLocation = arr[self.xcoord][self.ycoord]
         attemptingLocation = arr[self.xcoord + 1][self.ycoord]
         if(attemptingLocation == 0):
-            self.xcoord = attemptingLocation
+            currentLocation = 0
+            drawRectInArr(BLUE,self.xcoord, self.ycoord)
+            attemptingLocation = 3
+            self.xcoord = self.xcoord + 1
             self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
@@ -68,7 +81,10 @@ class Player(Inhabitant):
         currentLocation = arr[self.xcoord][self.ycoord]
         attemptingLocation = arr[self.xcoord - 1][self.ycoord]
         if(attemptingLocation == 0):
-            self.xcoord = attemptingLocation
+            currentLocation = 0
+            drawRectInArr(BLUE,self.xcoord, self.ycoord)
+            attemptingLocation = 3
+            self.xcoord = self.xcoord - 1
             self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
@@ -82,8 +98,8 @@ class Player(Inhabitant):
             self.playerDeath()
         '''
     
-    def displayPlayer(self, newX, newY):
-        drawRectInArr(GREEN, newX, newY, BLOCK_WIDTH, BLOCK_HEIGHT)
+    def displayPlayer(self):
+        drawRectInArr(GREEN, self.xcoord, self.ycoord)
 
     def playerDeath(self):
         pass
@@ -101,13 +117,27 @@ def main():
     player = Player()
     while running:
         for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+                elif event.key == K_LEFT:
+                    player.update(event.key)
+                elif event.key == K_RIGHT:
+                    player.update(event.key)
+            elif event.type == QUIT:
+                running = False
+            '''
             if event.type == pygame.QUIT:
                 running = False
-            if keys.[K_LEFT]:
+                pygame.quit()
+                sys.exit()
+            if event.type == keys[pygame.K_LEFT]:
                 player.moveLeft()
-            if event.key == pygame.K_RIGHT:
+            if event.type == keys[pygame.K_RIGHT]:
                 player.moveRight()
-
+            '''
+        pygame.display.update()
+        FramePerSec.tick(FPS)
 
     
 if __name__ == "__main__":
