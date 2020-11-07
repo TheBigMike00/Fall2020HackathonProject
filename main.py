@@ -47,7 +47,6 @@ class Player(Inhabitant):
         self.hp = random.randint(10, max_hp)
         self.str = random.randint(10, max_str)
         self.defence = random.randint(10, max_defence)
-
         
 class Poison_Shroom(Inhabitant):
     def __init__(self, max_hp):
