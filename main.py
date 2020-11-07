@@ -12,25 +12,24 @@ while running:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       running = False
-
+      
 class Inhabitant:
     def __init__(self, name):
         self.name = name
+        self.hp = -1
+        self.str = -1
+        self.defence = -1
         self.xcoord = None
         self.ycoord = None
-    
-    def display(self):
-        print(f"{self.name} {self.xcoord} {self.ycoord}")
         
 class Player(Inhabitant):
     def __init__(self, max_hp, max_str, max_defence):
         super().__init__("Warrior")
+        self.xcoord = 1
+        self.ycoord = 400
         self.hp = random.randint(10, max_hp)
         self.str = random.randint(10, max_str)
-        self.defence = random.randint(10, max_defence)
-        
-    def display(self):
-        print(f"{self.name} has {self.hp} HP, {self.str} Strength, and {self.defence} Defence.")        
+        self.defence = random.randint(10, max_defence)       
         
 def main():
   print("hello world")
