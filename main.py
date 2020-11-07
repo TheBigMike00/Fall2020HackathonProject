@@ -1,28 +1,36 @@
 import random
 import pygame
+import sys
 pygame.init()
 
 #2D Array Key:
-#0 -> available space
-#1 -> obstacle (area that player cannot move)
-#2 -> enemy (kills player)
+#0 -> available space (white)
+#1 -> obstacle (area that player cannot move) (blue)
+#2 -> enemy (kills player) (red)
+#3 -> player (green)
+#Example: arr[2][3] = 3 (player location at x = 2 & y = 3)
 
 BLOCK_WIDTH = 20
 BLOCK_HEIGHT = 20
+WHITE = (255,255,255)
+RED = (255,0,0)
+GREEN = (0,255,0)
+BLUE = (0,0,255)
 
-def drawRectInArr(arrX, arrY):
+
+def drawRectInArr(color, arrX, arrY):
     startX = arrX * BLOCK_WIDTH
     startY = arrY * BLOCK_HEIGHT
     #(starting x point, starting y point, "move over x steps"", 'move /up y steps )
-    pygame.draw.rect(screen, (255,0,0), (startX, startY, BLOCK_WIDTH, BLOCK_HEIGHT))
+    pygame.draw.rect(screen, color, (startX, startY, BLOCK_WIDTH, BLOCK_HEIGHT))
 
 background_colour = (0,0,255) #RGB Value
 (width, height) = (800, 400) 
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Fall2020Hackathon')
 screen.fill(background_colour)
-drawRectInArr(0,0)
-drawRectInArr(5,5)
+#drawRectInArr(0,0)
+#drawRectInArr(5,5)
 #pygame.draw.rect(screen, (255,0,0), (0,0, 40,80))
 screen.blit(screen,(0,0))
 pygame.display.flip()
@@ -53,7 +61,6 @@ class Player(Inhabitant):
         if(attemptingLocation == 0):
             self.xcoord = attemptingLocation
             self.displayPlayer()
-
         elif(attemptingLocation == 2):
             self.playerDeath()
     
@@ -62,6 +69,7 @@ class Player(Inhabitant):
         attemptingLocation = arr[self.xcoord - 1][self.ycoord]
         if(attemptingLocation == 0):
             self.xcoord = attemptingLocation
+            self.displayPlayer()
         elif(attemptingLocation == 2):
             self.playerDeath()
     '''
@@ -74,8 +82,8 @@ class Player(Inhabitant):
             self.playerDeath()
         '''
     
-    def displayPlayerOnBlock(self):
-        drawRectInArr(self.xcoord, self.ycoord, BLOCK_WIDTH, BLOCK_HEIGHT)
+    def displayPlayer(self, newX, newY):
+        drawRectInArr(GREEN, newX, newY, BLOCK_WIDTH, BLOCK_HEIGHT)
 
     def playerDeath(self):
         pass
@@ -89,19 +97,17 @@ class Poison_Shroom(Inhabitant):
                 
 def main():
     running = True
-    keys=pygame.key.get_pressed()
+    keys = pygame.key.get_pressed()
     player = Player()
-
-
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
-            if event.key == pygame.K_LEFT:
+            if keys.[K_LEFT]:
                 player.moveLeft()
             if event.key == pygame.K_RIGHT:
                 player.moveRight()
+
 
     
 if __name__ == "__main__":
