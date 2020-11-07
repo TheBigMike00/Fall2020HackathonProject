@@ -2,6 +2,11 @@ import random
 import pygame
 pygame.init()
 
+#2D Array Key:
+#0 -> available space
+#1 -> obstacle (area that player cannot move)
+#2 -> enemy (kills player)
+
 BLOCK_WIDTH = 20
 BLOCK_HEIGHT = 20
 
@@ -21,12 +26,12 @@ drawRectInArr(5,5)
 #pygame.draw.rect(screen, (255,0,0), (0,0, 40,80))
 screen.blit(screen,(0,0))
 pygame.display.flip()
-'''
+
 rows, cols = ((int)(height/20), (int)(width/20)) 
 arr = [[0 for i in range(cols)] for j in range(rows)] 
 arr[0][0] = 1
 print(arr)
-'''
+
 running = True
 while running:
   for event in pygame.event.get():
@@ -40,6 +45,7 @@ class Inhabitant:
         self.ycoord = None
         
 class Player(Inhabitant):
+<<<<<<< Updated upstream
     def __init__(self, max_hp, max_str, max_defence):
         super().__init__("Warrior")
         self.xcoord = 0
@@ -47,6 +53,41 @@ class Player(Inhabitant):
         self.hp = random.randint(10, max_hp)
         self.str = random.randint(10, max_str)
         self.defence = random.randint(10, max_defence)
+=======
+    def __init__(self):
+        super().__init__("Player")
+        self.xcoord = 0
+        self.ycoord = rows
+        isInAir = True
+        isAlive = True
+
+    def moveRight(self):
+        currentLocation = arr[self.xcoord][self.ycoord]
+        attemptingLocation = arr[self.xcoord + 1][self.ycoord]
+        if(attemptingLocation == 0):
+            self.xcoord = attemptingLocation
+        elif(attemptingLocation == 2):
+            self.playerDeath()
+    
+    def moveLeft(self):
+        currentLocation = arr[self.xcoord][self.ycoord]
+        attemptingLocation = arr[self.xcoord - 1][self.ycoord]
+        if(attemptingLocation == 0):
+            self.xcoord = attemptingLocation
+        elif(attemptingLocation == 2):
+            self.playerDeath()
+        
+    def jump(self):
+        currentLocation = arr[self.xcoord][self.ycoord]
+        attemptingLocation = arr[self.xcoord][self.ycoord - 3]
+        if(attemptingLocation == 0):
+            self.xcoord = attemptingLocation
+        elif(attemptingLocation == 2):
+            self.playerDeath()
+        
+
+    def playerDeath(self):
+>>>>>>> Stashed changes
 
         
 class Poison_Shroom(Inhabitant):
