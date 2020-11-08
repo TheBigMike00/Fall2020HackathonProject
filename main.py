@@ -196,7 +196,7 @@ class Player(Inhabitant):
         
     def playerDeath(self):
         self.DEATH_COUNTER+=1
-        pygame.draw.rect(screen, WHITE, (self.xcoord * 20, self.ycoord * 20, BLOCK_WIDTH, BLOCK_HEIGHT))
+        pygame.draw.rect(screen, BLUE, (self.xcoord * 20, self.ycoord * 20, BLOCK_WIDTH, BLOCK_HEIGHT))
         self.xcoord = 2
         self.ycoord = 9
         self.displayPlayer()
