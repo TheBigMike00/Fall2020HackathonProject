@@ -26,17 +26,7 @@ BLACK = (0,0,0)
 WINNINGCOLOR = (6,80,150)
 
 font = pygame.font.Font('freesansbold.ttf', 16) 
-# create a text suface object, 
-# on which text is drawn on it. 
-text = font.render(f"DEATHS: {DEATH_COUNTER}", True, RED, WHITE) 
-# create a rectangular object for the 
-# text surface object 
-textRect = text.get_rect()  
-# set the center of the rectangular object. 
-textRect.center = (300, 50) 
-def updateDEATH():
-    global DEATH_COUNTER
-    text = font.render(f"DEATHS: {DEATH_COUNTER}", True, RED, WHITE)
+winFont = pygame.font.Font('freesansbold.ttf', 69) 
 
 
 def drawRectInArrBlank(color, arrX, arrY):
@@ -130,6 +120,8 @@ class Player(Inhabitant):
         self.ycoord = 9
         self.displayPlayer()
         arr[self.ycoord][self.xcoord] = 3
+        self.DEATH_COUNTER = 0
+        self.isWin = False
 
     def update(self, key_pressed):
         if (key_pressed == K_LEFT):
@@ -198,7 +190,7 @@ class Player(Inhabitant):
             self.ycoord = self.ycoord + 1
             self.displayPlayer()
 
-            if(arr[self.ycoord + 1][self.xcoord] == 2):
+            if(arr[self.ycoord + 1][self.xcoord] == 4):
                 self.playerDeath()
 
         elif(attemptingLocation == 4):
@@ -206,31 +198,39 @@ class Player(Inhabitant):
         #print(self.xcoord, self.ycoord)
         
     def playerDeath(self):
-        global DEATH_COUNTER
-        DEATH_COUNTER = DEATH_COUNTER + 1
-        pygame.draw.rect(screen, BLUE, (self.xcoord * 20, self.ycoord * 20, BLOCK_WIDTH, BLOCK_HEIGHT))
+        self.DEATH_COUNTER+=1
+        pygame.draw.rect(screen, WHITE, (self.xcoord * 20, self.ycoord * 20, BLOCK_WIDTH, BLOCK_HEIGHT))
         self.xcoord = 2
         self.ycoord = 9
         self.displayPlayer()
-        updateDEATH()
+        text = font.render(f"DEATHS: {self.getDeaths()}", True, RED, WHITE)
     
+    def getDeaths(self):
+        return self.DEATH_COUNTER
+
+    def checkWin(self):    
+        if(arr[self.ycoord][self.xcoord + 1] == 5):
+            winText = font.render("AYYY YOU WON", True, GREEN, WHITE) 
+            textRect2 = winText.get_rect()  
+            textRect2.center = (400, 200)
+            return True
+            print('win')
+
     def displayPlayer(self):
         drawRectInArr(GREEN, self.xcoord, self.ycoord)
-
-
-        
-class Poison_Shroom(Inhabitant):
-    def __init__(self, max_hp):
-        super().__init__("Poison Shroom")
-        self.xcoord = 0
-        self.ycoord = 0
-        self.hp = random.randint(10, max_hp)
                 
 def main():
+    player = Player()
+    text = font.render(f"DEATHS: {player.getDeaths()}", True, RED, WHITE) 
+    textRect = text.get_rect()  
+    textRect.center = (300, 50) 
+    winText = winFont.render("AYYY YOU WON", True, GREEN, WHITE) 
+    #textRect2 = winText.get_rect()  
+    #textRect2.center = (400, 200)
     running = True
     keys = pygame.key.get_pressed()
-    player = Player()
     while running:
+        text = font.render(f"DEATHS: {player.getDeaths()}", True, RED, WHITE)
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
@@ -247,8 +247,13 @@ def main():
                 pass
         if((FramePerSec.tick(FPS) % 2) == 0):
             player.fallIfNeeded()
+
+        if(player.checkWin()):
+            winText = winFont.render("AYYY YOU WON", True, GREEN, WHITE) 
+            textRect2 = winText.get_rect()  
+            textRect2.center = (400, 200)
         screen.blit(text, textRect)
         pygame.display.update()
         FramePerSec.tick(FPS)
-    
+
 main()
