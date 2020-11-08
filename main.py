@@ -4,6 +4,8 @@ from pygame.locals import *
 import sys
 pygame.init()
 
+#completed by end of hackathon
+
 #2D Array Key:
 #0 -> available space (white)
 #1 -> obstacle (area that player cannot move) (blue)
