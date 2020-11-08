@@ -229,17 +229,17 @@ class Player(Inhabitant):
                 
 def main():
     player = Player()
-    text = font.render(f"DEATHS: {player.getDeaths()}", True, RED, WHITE) 
+    text = font.render(f"DEATHS: {player.getDeaths()}", True, RED, BLUE) 
     textRect = text.get_rect()  
     textRect.center = (300, 50) 
-    winText = font.render(f"WINS: {player.getWins()}", True, GREEN, WHITE) 
+    winText = font.render(f"WINS: {player.getWins()}", True, GREEN, BLUE) 
     textRect2 = text.get_rect()  
     textRect2.center = (475, 50) 
     running = True
     keys = pygame.key.get_pressed()
     while running:
-        text = font.render(f"DEATHS: {player.getDeaths()}", True, RED, WHITE)
-        winText = font.render(f"WINS: {player.getWins()}", True, GREEN, WHITE) 
+        text = font.render(f"DEATHS: {player.getDeaths()}", True, RED, BLUE)
+        winText = font.render(f"WINS: {player.getWins()}", True, GREEN, BLUE) 
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
