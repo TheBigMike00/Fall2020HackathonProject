@@ -24,6 +24,7 @@ GREEN = (0,255,0)
 BLUE = (0,0,255)
 BLACK = (0,0,0)
 WINNINGCOLOR = (6,80,150)
+nullColor = None
 
 font = pygame.font.Font('freesansbold.ttf', 16) 
 # create a text suface object, 
@@ -58,7 +59,9 @@ background_colour = (0,0,255) #RGB Value
 (width, height) = (800, 400) 
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Fall2020Hackathon')
-screen.fill(background_colour)
+#screen.fill(background_colour)
+background = pygame.image.load("Background.png")
+screen.blit(background, (0,0))
 #drawRectInArr(0,0)
 #drawRectInArr(5,5)
 #pygame.draw.rect(screen, (255,0,0), (0,0, 40,80))
@@ -73,6 +76,9 @@ dirtRect = dirt.get_rect()
 grass = pygame.image.load("GrassMid.png")
 grassRect = grass.get_rect()
 spikes = pygame.image.load("spikes.png")
+
+me = pygame.image.load("person.png")
+meRect = me.get_rect()
 
 
 #hard coded map
@@ -145,6 +151,7 @@ class Player(Inhabitant):
         if(attemptingLocation == 0):
             currentLocation = 0
             drawRectInArr(BLUE,self.xcoord, self.ycoord)
+            #screen.blit(background, (0,0))
             attemptingLocation = 3
             self.xcoord = self.xcoord + 1
             self.displayPlayer()
@@ -182,16 +189,16 @@ class Player(Inhabitant):
             currentLocation = 0
             drawRectInArr(BLUE,self.xcoord, self.ycoord)
             
-            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 5, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 5, BLOCK_WIDTH, BLOCK_HEIGHT), 1)
             FramePerSec.tick(FPS)
             pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 5, BLOCK_WIDTH, BLOCK_HEIGHT))
-            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 10, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 10, BLOCK_WIDTH, BLOCK_HEIGHT), 1)
             FramePerSec.tick(FPS)
             pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 10, BLOCK_WIDTH, BLOCK_HEIGHT))
-            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 15, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 15, BLOCK_WIDTH, BLOCK_HEIGHT), 1)
             FramePerSec.tick(FPS)
             pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 15, BLOCK_WIDTH, BLOCK_HEIGHT))
-            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 20, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 20, BLOCK_WIDTH, BLOCK_HEIGHT), 1)
             FramePerSec.tick(FPS)
             
             attemptingLocation = 3
@@ -215,7 +222,8 @@ class Player(Inhabitant):
         updateDEATH()
     
     def displayPlayer(self):
-        drawRectInArr(GREEN, self.xcoord, self.ycoord)
+        drawRectInArrBlank(GREEN, self.xcoord, self.ycoord)
+        screen.blit(me, (self.xcoord*20,self.ycoord*20))
 
 
         
@@ -250,5 +258,6 @@ def main():
         screen.blit(text, textRect)
         pygame.display.update()
         FramePerSec.tick(FPS)
-    
-main()
+
+if __name__ == "__main__":   
+    main()
