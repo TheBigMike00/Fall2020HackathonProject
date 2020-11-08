@@ -13,6 +13,7 @@ pygame.init()
 #5 -> 
 #Example: arr[2][3] = 3 (player location at x = 2 & y = 3)
 
+global DEATH_COUNTER
 DEATH_COUNTER = 0
 BLOCK_WIDTH = 20
 BLOCK_HEIGHT = 20
@@ -24,15 +25,17 @@ BLACK = (0,0,0)
 WINNINGCOLOR = (6,80,150)
 
 font = pygame.font.Font('freesansbold.ttf', 16) 
-  
 # create a text suface object, 
 # on which text is drawn on it. 
-text = font.render('DEATHS: ', True, RED, WHITE) 
+text = font.render(f"DEATHS: {DEATH_COUNTER}", True, RED, WHITE) 
 # create a rectangular object for the 
 # text surface object 
 textRect = text.get_rect()  
 # set the center of the rectangular object. 
 textRect.center = (300, 50) 
+def updateDEATH():
+    global DEATH_COUNTER
+    text = font.render(f"DEATHS: {DEATH_COUNTER}", True, RED, WHITE)
 
 
 def drawRectInArr(color, arrX, arrY):
@@ -102,14 +105,12 @@ class Inhabitant:
         self.ycoord = None
         
 class Player(Inhabitant):
-
     def __init__(self):
         super().__init__("Player")
         self.xcoord = 2
         self.ycoord = 9
         self.displayPlayer()
         arr[self.ycoord][self.xcoord] = 3
-        self.isAlive = True
 
     def update(self, key_pressed):
         if (key_pressed == K_LEFT):
@@ -153,7 +154,7 @@ class Player(Inhabitant):
             self.ycoord = self.ycoord - 3
             self.displayPlayer()
         elif(attemptingLocation == 2):
-            self.playerDeath() 
+            self.playerDeath()
     
     def fallIfNeeded(self):
         currentLocation = arr[self.ycoord][self.xcoord]
@@ -181,20 +182,22 @@ class Player(Inhabitant):
             if(arr[self.ycoord + 1][self.xcoord] == 2):
                 self.playerDeath()
 
-        elif(attemptingLocation == 2):
+        elif(attemptingLocation == 4):
             self.playerDeath()
         #print(self.xcoord, self.ycoord)
         
-    
-    def displayPlayer(self):
-        drawRectInArr(GREEN, self.xcoord, self.ycoord)
-
     def playerDeath(self):
-        DEATH_COUNTER += 1
+        global DEATH_COUNTER
+        DEATH_COUNTER = DEATH_COUNTER + 1
         pygame.draw.rect(screen, WHITE, (self.xcoord * 20, self.ycoord * 20, BLOCK_WIDTH, BLOCK_HEIGHT))
         self.xcoord = 2
         self.ycoord = 9
         self.displayPlayer()
+        updateDEATH()
+    
+    def displayPlayer(self):
+        drawRectInArr(GREEN, self.xcoord, self.ycoord)
+
 
         
 class Poison_Shroom(Inhabitant):
