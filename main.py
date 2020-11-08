@@ -60,6 +60,8 @@ grass = pygame.image.load("GrassMid.png")
 grassRect = grass.get_rect()
 spikes = pygame.image.load("spikes.png")
 
+me = pygame.image.load("person.png")
+meRect = me.get_rect()
 
 #hard coded map
 arr = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
@@ -171,16 +173,16 @@ class Player(Inhabitant):
             currentLocation = 0
             drawRectInArr(BLUE,self.xcoord, self.ycoord)
             
-            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 5, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 5, BLOCK_WIDTH, BLOCK_HEIGHT), 0)
             FramePerSec.tick(FPS)
             pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 5, BLOCK_WIDTH, BLOCK_HEIGHT))
-            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 10, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 10, BLOCK_WIDTH, BLOCK_HEIGHT), 0)
             FramePerSec.tick(FPS)
             pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 10, BLOCK_WIDTH, BLOCK_HEIGHT))
-            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 15, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 15, BLOCK_WIDTH, BLOCK_HEIGHT), 0)
             FramePerSec.tick(FPS)
             pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 15, BLOCK_WIDTH, BLOCK_HEIGHT))
-            pygame.draw.rect(screen, GREEN, (self.xcoord * 20, (self.ycoord * 20) + 20, BLOCK_WIDTH, BLOCK_HEIGHT))
+            pygame.draw.rect(screen, BLUE, (self.xcoord * 20, (self.ycoord * 20) + 20, BLOCK_WIDTH, BLOCK_HEIGHT), 0)
             FramePerSec.tick(FPS)
             
             attemptingLocation = 3
@@ -221,7 +223,9 @@ class Player(Inhabitant):
             return True
 
     def displayPlayer(self):
-        drawRectInArr(GREEN, self.xcoord, self.ycoord)
+        drawRectInArrBlank(GREEN, self.xcoord, self.ycoord)
+        screen.blit(me, (self.xcoord*20,self.ycoord*20))
+
                 
 def main():
     player = Player()
